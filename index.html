@@ -152,7 +152,6 @@
             color: var(--text-muted);
         }
     </style>
-    <!-- Zoho Desk Core Scripts Embedded Natively -->
     <script src='https://static.zohocdn.com/zohodeskstatic/app/js/jqueryandencoder.ef05974972bf3bca1b87.js'></script>
 </head>
 <body>
@@ -172,17 +171,14 @@
             </ul>
         </div>
 
-        <!-- Integrated Zoho Action & Target Enctype -->
         <form name='zsWebToCase_1347140000000417004' id='zsWebToCase_1347140000000417004' action='https://desk.zoho.com/support/WebToCase' method='POST' onSubmit='return processAndValidateFields()' enctype='multipart/form-data'>
             
-            <!-- Zoho Hidden Security Tokens Exclusively Matched to your Account -->
             <input type='hidden' name='xnQsjsdp' value='edbsn5d556bb474ee3862ddac984d72225aca'/>
             <input type='hidden' name='xmIwtLD' value='edbsn81c9c70f0a93f9f8b51e80a2fdf0fb765303a081a71e31432da33473defc759a'/>
             <input type='hidden' name='xJdfEaS' value=''/>
             <input type='hidden' name='actionType' value='Q2FzZXM='/>
             <input type="hidden" id="property(module)" value="Cases"/>
             
-            <!-- Target return URL after submission -->
             <input type='hidden' name='returnURL' value='https://thc3pter.github.io'/>
 
             <div class="form-group">
@@ -203,7 +199,6 @@
                 </select>
             </div>
 
-            <!-- Dynamically toggled field -->
             <div class="form-group hidden" id="orderIdGroup">
                 <label for="orderId">Fab Order ID / Invoice Number</label>
                 <input type="text" id="orderId" placeholder="e.g., ORD-123456">
@@ -225,10 +220,8 @@
                 <input type='text' maxlength='255' id='Subject' name='Subject' required placeholder="e.g., Build ID mismatch on clean project initialization">
             </div>
 
-            <!-- Hidden pipeline description input that Zoho actually parses -->
             <input type="hidden" name="Description" id="ActualDescription">
 
-            <!-- UI Presentation Textarea -->
             <div class="form-group">
                 <label for="UiDescription">Issue Description & Logs</label>
                 <textarea id="UiDescription" rows="6" required placeholder="Please provide step-by-step instructions to reproduce the behavior and paste any relevant output/compiler logs here..."></textarea>
@@ -266,14 +259,13 @@
         }
     }
 
-    // Engineering pipeline: Appends metadata fields into the single Zoho Description payload before POST
+    // Intercepts submit event, dynamically builds metadata table and maps data to Zoho structure
     function processAndValidateFields(){
         var name = jQuery('#Contact\\ Name').val();
         var email = jQuery('#Email').val();
         var subject = jQuery('#Subject').val();
         var uiDesc = jQuery('#UiDescription').val();
         
-        // Basic validations derived from Zoho native rules
         if(!name.trim() || !email.trim() || !subject.trim() || !uiDesc.trim()){
             alert('Fields cannot be empty.');
             return false;
@@ -284,7 +276,6 @@
             return false;
         }
 
-        // Build Metadata Header Block
         var license = jQuery('#licenseType').val().toUpperCase();
         var orderId = jQuery('#orderId').val() || 'N/A';
         var ueVersion = jQuery('#engineVersion').val();
@@ -299,7 +290,6 @@
             "=================================\n\n" +
             "CUSTOMER USER DESCRIPTION:\n" + uiDesc;
 
-        // Inject into the hidden input Zoho expects
         jQuery('#ActualDescription').val(compiledDescription);
         
         document.getElementById('zsSubmitButton_1347140000000417004').setAttribute('disabled', 'disabled');
