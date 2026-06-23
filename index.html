@@ -10,7 +10,7 @@
             --card-bg: #151d30;
             --text-main: #f1f5f9;
             --text-muted: #64748b;
-            --accent: #f59e0b; /* Un tono ámbar/dorado bien gaming */
+            --accent: #f59e0b; /* Dorado AEG-GAMING */
             --accent-hover: #d97706;
             --border: #1e293b;
         }
@@ -105,9 +105,13 @@
             display: none !important;
         }
 
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
         button {
-            background-color: var(--accent);
-            color: #000000;
             border: none;
             border-radius: 6px;
             padding: 0.85rem;
@@ -115,14 +119,30 @@
             font-weight: 700;
             cursor: pointer;
             transition: background-color 0.2s;
-            margin-top: 1rem;
-            width: 100%;
             text-transform: uppercase;
             letter-spacing: 0.025em;
         }
 
-        button:hover {
+        button[type="submit"] {
+            background-color: var(--accent);
+            color: #000000;
+            flex: 2;
+        }
+
+        button[type="submit"]:hover {
             background-color: var(--accent-hover);
+        }
+
+        button[type="button"] {
+            background-color: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            flex: 1;
+        }
+
+        button[type="button"]:hover {
+            border-color: var(--text-muted);
+            color: var(--text-main);
         }
 
         .footer {
@@ -132,6 +152,8 @@
             color: var(--text-muted);
         }
     </style>
+    <!-- Zoho Desk Core Scripts Embedded Natively -->
+    <script src='https://static.zohocdn.com/zohodeskstatic/app/js/jqueryandencoder.ef05974972bf3bca1b87.js'></script>
 </head>
 <body>
 
@@ -150,22 +172,32 @@
             </ul>
         </div>
 
-        <!-- NOTE: Replace the action attribute with your Zoho Desk Web-to-Form URL later -->
-        <form id="supportForm" action="YOUR_ZOHO_DESK_FORM_URL_HERE" method="POST">
+        <!-- Integrated Zoho Action & Target Enctype -->
+        <form name='zsWebToCase_1347140000000417004' id='zsWebToCase_1347140000000417004' action='https://desk.zoho.com/support/WebToCase' method='POST' onSubmit='return processAndValidateFields()' enctype='multipart/form-data'>
             
+            <!-- Zoho Hidden Security Tokens Exclusively Matched to your Account -->
+            <input type='hidden' name='xnQsjsdp' value='edbsn5d556bb474ee3862ddac984d72225aca'/>
+            <input type='hidden' name='xmIwtLD' value='edbsn81c9c70f0a93f9f8b51e80a2fdf0fb765303a081a71e31432da33473defc759a'/>
+            <input type='hidden' name='xJdfEaS' value=''/>
+            <input type='hidden' name='actionType' value='Q2FzZXM='/>
+            <input type="hidden" id="property(module)" value="Cases"/>
+            
+            <!-- Target return URL after submission -->
+            <input type='hidden' name='returnURL' value='https://thc3pter.github.io'/>
+
             <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" required placeholder="John Doe">
+                <label for="Contact Name">Full Name</label>
+                <input type='text' maxlength='120' id='Contact Name' name='Contact Name' required placeholder="John Doe">
             </div>
 
             <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required placeholder="john@example.com">
+                <label for="Email">Email Address</label>
+                <input type='text' maxlength='120' id='Email' name='Email' required placeholder="john@example.com">
             </div>
 
             <div class="form-group">
                 <label for="licenseType">License Type</label>
-                <select id="licenseType" name="licenseType" required onchange="toggleOrderField()">
+                <select id="licenseType" onchange="toggleOrderField()">
                     <option value="community">Personal / Educational / Community (Free Tier)</option>
                     <option value="commercial">Commercial / Enterprise (Paid Marketplace License)</option>
                 </select>
@@ -174,30 +206,38 @@
             <!-- Dynamically toggled field -->
             <div class="form-group hidden" id="orderIdGroup">
                 <label for="orderId">Fab Order ID / Invoice Number</label>
-                <input type="text" id="orderId" name="orderId" placeholder="e.g., ORD-123456">
+                <input type="text" id="orderId" placeholder="e.g., ORD-123456">
             </div>
 
             <div class="form-group">
                 <label for="engineVersion">Target Unreal Engine Version</label>
-                <select id="engineVersion" name="engineVersion" required>
+                <select id="engineVersion">
+                    <option value="5.8">UE 5.8</option>
                     <option value="5.7.4">UE 5.7.4</option>
                     <option value="5.7.0">UE 5.7.0</option>
                     <option value="5.6">UE 5.6</option>
-                    <option value="other">Other (Specify in description)</option>
+                    <option value="other">Other</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="subject">Subject</label>
-                <input type="text" id="subject" name="subject" required placeholder="e.g., Build ID mismatch on clean project initialization">
+                <label for="Subject">Subject</label>
+                <input type='text' maxlength='255' id='Subject' name='Subject' required placeholder="e.g., Build ID mismatch on clean project initialization">
             </div>
 
+            <!-- Hidden pipeline description input that Zoho actually parses -->
+            <input type="hidden" name="Description" id="ActualDescription">
+
+            <!-- UI Presentation Textarea -->
             <div class="form-group">
-                <label for="description">Issue Description & Logs</label>
-                <textarea id="description" name="description" rows="6" required placeholder="Please provide step-by-step instructions to reproduce the behavior and paste any relevant output/compiler logs here..."></textarea>
+                <label for="UiDescription">Issue Description & Logs</label>
+                <textarea id="UiDescription" rows="6" required placeholder="Please provide step-by-step instructions to reproduce the behavior and paste any relevant output/compiler logs here..."></textarea>
             </div>
 
-            <button type="submit">Submit Ticket</button>
+            <div class="button-group">
+                <button type="submit" id="zsSubmitButton_1347140000000417004">Submit Ticket</button>
+                <button type="button" onclick="window.location.reload();">Reset</button>
+            </div>
         </form>
     </div>
     <div class="footer">
@@ -206,6 +246,11 @@
 </div>
 
 <script>
+    window.addEventListener('pageshow', function () {
+        const submitButton = document.getElementById('zsSubmitButton_1347140000000417004');
+        if (submitButton) { submitButton.removeAttribute('disabled'); }
+    });
+
     function toggleOrderField() {
         const licenseType = document.getElementById('licenseType').value;
         const orderIdGroup = document.getElementById('orderIdGroup');
@@ -219,6 +264,46 @@
             orderIdInput.removeAttribute('required');
             orderIdInput.value = ''; 
         }
+    }
+
+    // Engineering pipeline: Appends metadata fields into the single Zoho Description payload before POST
+    function processAndValidateFields(){
+        var name = jQuery('#Contact\\ Name').val();
+        var email = jQuery('#Email').val();
+        var subject = jQuery('#Subject').val();
+        var uiDesc = jQuery('#UiDescription').val();
+        
+        // Basic validations derived from Zoho native rules
+        if(!name.trim() || !email.trim() || !subject.trim() || !uiDesc.trim()){
+            alert('Fields cannot be empty.');
+            return false;
+        }
+        
+        if(!email.match(/^([\w_][\w\-_.+\'&]*)@(?=.{4,256}$)(([\w]+)([\-_]*[\w])*[\.])+[a-zA-Z]{2,22}$/)){
+            alert('Please enter a valid Email address.');
+            return false;
+        }
+
+        // Build Metadata Header Block
+        var license = jQuery('#licenseType').val().toUpperCase();
+        var orderId = jQuery('#orderId').val() || 'N/A';
+        var ueVersion = jQuery('#engineVersion').val();
+
+        var compiledDescription = 
+            "=================================\n" +
+            " METADATA PIPELINE (AEG-SUPPORT)\n" +
+            "=================================\n" +
+            "LICENSE TIER : " + license + "\n" +
+            "FAB ORDER ID : " + orderId + "\n" +
+            "ENGINE VER   : UE " + ueVersion + "\n" +
+            "=================================\n\n" +
+            "CUSTOMER USER DESCRIPTION:\n" + uiDesc;
+
+        // Inject into the hidden input Zoho expects
+        jQuery('#ActualDescription').val(compiledDescription);
+        
+        document.getElementById('zsSubmitButton_1347140000000417004').setAttribute('disabled', 'disabled');
+        return true;
     }
 </script>
 </body>
